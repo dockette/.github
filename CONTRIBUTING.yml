@@ -1,3 +1,38 @@
-# Contributing
+title: Contributing to Dockette
+description: >-
+  Thanks for helping improve Dockette repositories. Keep changes focused,
+  tested, and easy to review.
 
-Your feedback or PR is really welcomed!
+steps:
+  - name: Start with an issue
+    details:
+      - Search existing issues and pull requests first.
+      - For larger changes, open an issue to discuss approach before coding.
+  - name: Fork and branch
+    details:
+      - Fork the target repository.
+      - Create a branch from master (for example fix/nginx-hsts or docs/readme-update).
+  - name: Make focused changes
+    details:
+      - Keep pull requests small and scoped to one problem.
+      - Follow existing code style and project structure.
+      - Update documentation when behavior or configuration changes.
+  - name: Verify locally
+    details:
+      - Run the repository checks (tests, linters, and image builds when available).
+      - Ensure changes are reproducible and avoid environment-specific behavior.
+  - name: Open pull request
+    details:
+      - Write clear commit messages describing why the change is needed.
+      - Link related issues (for example Closes #123).
+      - Describe what changed, how it was tested, and any upgrade notes.
+
+pull_request_checklist:
+  - Tests and checks pass locally.
+  - Documentation and examples are updated when needed.
+  - No secrets, tokens, or private credentials are committed.
+  - Breaking changes are explicitly documented.
+
+security:
+  reporting: Do not open public issues for vulnerabilities.
+  process: Follow the repository SECURITY.md disclosure instructions.
