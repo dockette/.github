@@ -1,0 +1,41 @@
+name: Docker Hub description
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: true
+        type: string
+
+      readme:
+        required: false
+        type: string
+        default: "./README.md"
+
+jobs:
+  dockerhub-description:
+    name: "${{ inputs.image }}"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # The GitHub repository description is the single source of truth for the
+      # Docker Hub short description. It is read via API, because scheduled runs
+      # do not carry the repository in the event payload.
+      - name: Read GitHub description
+        id: repo
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "description=$(gh api repos/${{ github.repository }} --jq '(.description // "")[0:100]')" >> "$GITHUB_OUTPUT"
+
+      - name: Update Docker Hub description
+        uses: peter-evans/dockerhub-description@v5
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ inputs.image }}
+          short-description: ${{ steps.repo.outputs.description }}
+          readme-filepath: ${{ inputs.readme }}
